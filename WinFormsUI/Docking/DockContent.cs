@@ -188,6 +188,8 @@ namespace WeifenLuo.WinFormsUI.Docking
             get { return DockHandler.IsActivated; }
         }
 
+        public bool PreCreated { get; set; }
+
         public bool IsDockStateValid(DockState dockState)
         {
             return DockHandler.IsDockStateValid(dockState);

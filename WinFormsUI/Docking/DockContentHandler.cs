@@ -304,7 +304,8 @@ namespace WeifenLuo.WinFormsUI.Docking
                 if (Pane == value)
                     return;
 
-                DockPanel.SuspendLayout(true);
+                if (DockPanel != null)
+                    DockPanel.SuspendLayout(true);
 
                 DockPane oldPane = Pane;
 
@@ -313,7 +314,8 @@ namespace WeifenLuo.WinFormsUI.Docking
                 PanelPane = (value == null ? null : (value.IsFloat ? PanelPane : value));
                 ResumeSetDockState(IsHidden, value != null ? value.DockState : DockState.Unknown, oldPane);
 
-                DockPanel.ResumeLayout(true, true);
+                if (DockPanel != null)
+                    DockPanel.ResumeLayout(true, true);
             }
         }
 
@@ -453,7 +455,13 @@ namespace WeifenLuo.WinFormsUI.Docking
             pane.RemoveContent(Content);
             SetPane(null);
             if (pane.Contents.Count == 0)
+            {
+                // Remove controls which should not be disposed before disposing the pane
+                if (Content.PreCreated && Content is Control)
+                    pane.Controls.Remove((Control)Content);
+
                 pane.Dispose();
+            }
         }
 
         private DockPane m_floatPane = null;
