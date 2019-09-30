@@ -330,7 +330,7 @@ namespace WeifenLuo.WinFormsUI.Docking
                 {
                     xmlOut.WriteStartElement("FloatWindow");
                     xmlOut.WriteAttributeString("ID", dockPanel.FloatWindows.IndexOf(fw).ToString(CultureInfo.InvariantCulture));
-                    xmlOut.WriteAttributeString("Bounds", rectConverter.ConvertToInvariantString(fw.Bounds));
+                    xmlOut.WriteAttributeString("Bounds", rectConverter.ConvertToInvariantString(fw.WindowState == System.Windows.Forms.FormWindowState.Minimized ? fw.RestoreBounds : fw.Bounds));
                     xmlOut.WriteAttributeString("ZOrderIndex", fw.DockPanel.FloatWindows.IndexOf(fw).ToString(CultureInfo.InvariantCulture));
                     xmlOut.WriteStartElement("NestedPanes");
                     xmlOut.WriteAttributeString("Count", fw.NestedPanes.Count.ToString(CultureInfo.InvariantCulture));
